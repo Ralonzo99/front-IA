@@ -705,17 +705,111 @@ export class DocumentoUploadComponent implements OnInit {
     this.documentos$.subscribe(docs => count = docs.length).unsubscribe();
     return count;
   }
+constructor(
+  private appService: DocumentoGastoApplicationService,
+  private router: Router
+) {
+  this.documentos$ = this.appService.documentos$;
+  this.procesando$ = this.appService.procesando$;
+  this.error$ = this.appService.error$;
 
-  import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { DocumentoGastoApplicationService } from '../../../core/application/services/documento-gasto-application.service';
-import { DocumentoGasto } from '../../../core/domain/entities/factura.entity';
-import { Router, RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
+  this.detectarTemaDark();
+}
 
-@Component({
-  selector: 'app-documento-upload',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
-  template: `
+  ngOnInit(): void {
+    // Detectar cambios de tema
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', (e) => {
+          this.isDarkMode = e.matches;
+        });
+    }
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = false;
+
+    const files = event.dataTransfer?.files;
+
+    if (files) {
+      this.procesarArchivos(files);
+    }
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files) {
+      this.procesarArchivos(input.files);
+      input.value = '';
+    }
+  }
+
+  private async procesarArchivos(files: FileList): Promise<void> {
+    for (let i = 0; i < files.length; i++) {
+      const archivo = files[i];
+
+      try {
+        const documento =
+          await this.appService.procesarNuevoDocumento(archivo);
+
+        this.ultimoDocumentoProcesado = documento;
+
+        setTimeout(() => {
+          if (this.ultimoDocumentoProcesado?.id === documento.id) {
+            this.ultimoDocumentoProcesado = null;
+          }
+        }, 5000);
+
+      } catch (error) {
+        console.error(
+          'Error procesando archivo:',
+          archivo.name,
+          error
+        );
+      }
+    }
+  }
+
+  verDetalles(documento: DocumentoGasto): void {
+    this.appService.seleccionarDocumento(documento);
+    this.router.navigate(['/documento', documento.id]);
+  }
+
+  eliminarDocumento(id: string): void {
+    if (confirm('¿Estás seguro de eliminar este documento?')) {
+      this.appService.eliminarDocumento(id);
+    }
+  }
+
+  cerrarError(): void {
+    console.log('Cerrar error');
+  }
+
+  getConfianzaColor(confianza: number): string {
+    if (confianza >= 90) return '#10b981';
+    if (confianza >= 70) return '#f59e0b';
+    return '#ef4444';
+  }
+
+  private detectarTemaDark(): void {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      this.isDarkMode = true;
+    }
+  }
+}
