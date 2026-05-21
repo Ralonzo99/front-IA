@@ -1,17 +1,23 @@
 import { Routes } from '@angular/router';
-import { FacturaViewComponent } from './presentation/components/factura-view/factura-view.component';
+import { DocumentoUploadComponent } from './presentation/components/documento-upload/documento-upload.component';
+import { DashboardComponent } from './presentation/pages/dashboard/dashboard.component';
+import { DocumentoDetailComponent } from './presentation/components/documento-detail/documento-detail.component';
 
 export const routes: Routes = [
   {
-    path: '', // Página de inicio
-    component: FacturaViewComponent
+    path: '',
+    component: DocumentoUploadComponent
   },
   {
-    path: 'factura',
-    component: FacturaViewComponent
+    path: 'dashboard',
+    component: DashboardComponent
   },
   {
-    path: '**', // Si escriben cualquier ruta inexistente
+    path: 'documento/:id',
+    component: DocumentoDetailComponent
+  },
+  {
+    path: '**',
     redirectTo: ''
   }
 ];
