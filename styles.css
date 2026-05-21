@@ -1,0 +1,15 @@
+/* ===== IMPORTAR FUENTE INTER ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #ffffff; /* Blanco total */
+  font-family: 'Inter', sans-serif;
+}
+
+app-root {
+  display: block;
+  height: 100%;
+}

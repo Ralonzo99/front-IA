@@ -1,0 +1,65 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.master-container {
+  position: fixed; inset: 0; display: flex; flex-direction: column;
+  background: #fff; color: #374151;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* ── Navbar Corregido ── */
+.main-navbar { border-bottom: 1px solid #E5E7EB; padding: 0 32px; height: 70px; display: flex; align-items: center; background: #fff; flex-shrink: 0; }
+.nav-content { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+.logo-img { height: 48px; width: auto; display: block; }
+
+.viewport-body { flex: 1; padding: 20px 40px; overflow-y: auto; background: #fff; display: flex; flex-direction: column; }
+.document-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; display: flex; flex-direction: column; height: 100%; width: 100%; }
+.row-padding { padding: 14px 24px; flex-shrink: 0; }
+.border-bottom { border-bottom: 1px solid #E5E7EB; }
+.flex-gap { display: flex; align-items: center; gap: 12px; }
+
+/* ── Título con Negrita Corregida ── */
+.invoice-title { font-size: 18px; color: #111827; display: flex; align-items: center; gap: 8px; margin: 0; }
+.tipo-txt { font-weight: 800; }
+.numero-txt { font-weight: 700 !important; color: #374151; font-size: 17px; } /* Negrita reforzada */
+
+/* ── Badges ── */
+.status-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; text-transform: uppercase; }
+.status-exito      { background-color: #D1FAE5 !important; color: #065F46 !important; }
+.status-error      { background-color: #FEE2E2 !important; color: #991B1B !important; }
+
+/* ── Datos ── */
+.data-main-box { background: #fff; border-bottom: 1px solid #E5E7EB; padding: 12px 24px; }
+.data-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: 13px; line-height: 1.6; }
+.label-bold { font-weight: 700 !important; color: #111827 !important; }
+.data-sep { color: #D1D5DB; margin: 0 6px; }
+
+/* ── Visor y Botones ── */
+.pdf-viewer-area { flex: 1; padding: 16px 24px; min-height: 300px; display: flex; flex-direction: column; }
+.iframe-full { width: 100%; height: 100%; border: 1px solid #E5E7EB; border-radius: 8px; flex: 1; }
+.btn-primary-blue { background: #1D4ED8; color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+
+.btn-modern { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #E5E7EB; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; background: #fff; cursor: pointer; }
+
+/* ── Footer ── */
+.card-footer { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-top: 1px solid #E5E7EB; background: #fff; flex-shrink: 0; }
+.footer-left-content { display: flex; align-items: center; gap: 12px; }
+.footer-logo { width: 44px; height: 44px; object-fit: contain; }
+.footer-copy h3 { font-size: 13px; font-weight: 700; color: #111827; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .main-navbar { padding: 0 16px; height: auto; padding: 15px 0; }
+  .nav-content { flex-direction: column; gap: 15px; text-align: center; }
+  .viewport-body { padding: 10px; }
+  .invoice-title { flex-direction: column; align-items: flex-start; }
+  .data-row { flex-direction: column; align-items: flex-start; }
+  .card-footer { flex-direction: column; gap: 16px; }
+  .btn-primary-blue { width: 100%; }
+}
+
+/* ── Dark Mode ── */
+.dark-theme, .dark-theme .main-navbar, .dark-theme .document-card, .dark-theme .data-main-box, .dark-theme .card-footer { 
+  background: #1e293b !important; border-color: #334155 !important; 
+}
+.dark-theme .label-bold, .dark-theme .numero-txt { color: #f1f5f9 !important; }
